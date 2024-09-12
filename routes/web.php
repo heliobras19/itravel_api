@@ -27,4 +27,6 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
     Route::get('reserva', [ReservaController::class, 'index'])->name('reserva');
+    Route::get('reserva/create', [ReservaController::class, 'create'])->name('reserva.create');
+    Route::post('reserva', [ReservaController::class, 'store'])->name('reservas.store');
 });

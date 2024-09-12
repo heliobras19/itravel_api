@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\ReservaController as APIReservaController;
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\ReservaController;
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/fazer_reserva', [ReservaController::class, 'storeAPI']);
+Route::post('/fazer_reserva', [APIReservaController::class, 'store']);
 Route::get('/search_airport', [AppController::class, 'searchCity']);
 
 Route::post('/search_fligths', [FlightController::class, 'searchFlights']);
