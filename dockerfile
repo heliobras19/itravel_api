@@ -1,19 +1,10 @@
-FROM webdevops/php-nginx:8.2
+FROM php:8.1-fpm
 
-# Install Laravel framework system requirements (https://laravel.com/docs/8.x/deployment#optimizing-configuration-loading)
-#RUN apk add oniguruma-dev postgresql-dev libxml2-dev
-RUN docker-php-ext-install \
-        bcmath \
-        ctype \
-        fileinfo \
-        json \
-        mbstring \
-        pdo_mysql \
-        pdo_pgsql \
-        tokenizer \
-        xml
+# Instalar extensões PHP
+RUN apt-get update && apt-get install -y \
+    libmysqlclient-dev \
+    && docker-php-ext-install pdo_mysql
 
-# Copy Composer binary from the Composer official Docker image
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 ENV WEB_DOCUMENT_ROOT /app/public
@@ -30,3 +21,9 @@ RUN php artisan route:cache
 RUN php artisan view:cache
 
 RUN chown -R application:application .
+
+# Expor porta
+EXPOSE 8000
+
+# Comando para iniciar o servidor
+CMD ["php-fpm"]
